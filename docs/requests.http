@@ -1,0 +1,58 @@
+### Set these IDs to the actual create responses in your HTTP client
+@baseUrl = http://localhost:8080
+@customerId = 3
+@policyId = 3
+
+### List customers
+GET {{baseUrl}}/api/customers
+
+### Create a customer
+POST {{baseUrl}}/api/customers
+Content-Type: application/json
+
+{"name":"Taylor Demo","email":"taylor@example.com"}
+
+### Get a customer
+GET {{baseUrl}}/api/customers/{{customerId}}
+
+### Update customer
+PUT {{baseUrl}}/api/customers/{{customerId}}
+Content-Type: application/json
+
+{"name":"Taylor Updated","email":"taylor.updated@example.com"}
+
+### Search
+GET {{baseUrl}}/api/customers?name=taylor&page=0&size=5
+
+### Create policy
+POST {{baseUrl}}/api/policies
+Content-Type: application/json
+
+{"policyNumber":"DEMO-003","customerId":{{customerId}},"sumAssured":150000.00,"startDate":"2026-01-01","endDate":"2027-01-01","status":"ACTIVE"}
+
+### Get policy
+GET {{baseUrl}}/api/policies/{{policyId}}
+
+### Filter
+GET {{baseUrl}}/api/policies?customerId={{customerId}}&status=ACTIVE
+
+### Update policy
+PUT {{baseUrl}}/api/policies/{{policyId}}
+Content-Type: application/json
+
+{"policyNumber":"DEMO-003","customerId":{{customerId}},"sumAssured":175000.00,"startDate":"2026-01-01","endDate":"2027-01-01","status":"CANCELLED"}
+
+### Invalid amount returns 400
+POST {{baseUrl}}/api/policies
+Content-Type: application/json
+
+{"policyNumber":"DEMO-INVALID","customerId":{{customerId}},"sumAssured":0,"startDate":"2026-01-01","endDate":"2027-01-01","status":"ACTIVE"}
+
+### Customer delete blocked with 409 until policy is deleted
+DELETE {{baseUrl}}/api/customers/{{customerId}}
+
+### Delete policy
+DELETE {{baseUrl}}/api/policies/{{policyId}}
+
+### Delete customer
+DELETE {{baseUrl}}/api/customers/{{customerId}}
