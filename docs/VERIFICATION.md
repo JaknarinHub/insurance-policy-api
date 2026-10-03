@@ -10,3 +10,7 @@ Verified on 4 October 2026 (Asia/Bangkok) with Java 21.0.10 and Maven 3.6.3. The
 - Postman GUI import and manual screenshots were not performed. Screenshots remain documented placeholders.
 
 Tests can be reproduced with `mvn clean test`. Reports are generated in `target/surefire-reports/` and are excluded from the source ZIP.
+
+## Layered MVC refactor
+
+On 4 October 2026 (Asia/Bangkok), the code was reorganized into `controller`, `service`, `model`, `dto`, and `repository` packages. The customer API now uses a response DTO. `mvn clean test` passed: 8 tests, 0 failures, 0 errors. The endpoint paths and JSON fields were preserved.

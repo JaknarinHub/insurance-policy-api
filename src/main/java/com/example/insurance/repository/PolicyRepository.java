@@ -1,4 +1,5 @@
-package com.example.insurance.policy;
+package com.example.insurance.repository;
+import com.example.insurance.model.Policy;
 import org.springframework.data.jpa.repository.*;
 public interface PolicyRepository extends JpaRepository<Policy, Long>, JpaSpecificationExecutor<Policy> {
     boolean existsByPolicyNumber(String number);

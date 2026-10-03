@@ -1,4 +1,4 @@
-package com.example.insurance.customer;
+package com.example.insurance.model;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "customers", uniqueConstraints = @UniqueConstraint(columnNames = "email"))

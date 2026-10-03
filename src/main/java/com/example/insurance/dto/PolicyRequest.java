@@ -1,4 +1,5 @@
-package com.example.insurance.policy;
+package com.example.insurance.dto;
+import com.example.insurance.model.PolicyStatus;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;

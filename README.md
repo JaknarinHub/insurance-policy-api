@@ -208,21 +208,24 @@ You can also open `docs/requests.http` in an IDE with an HTTP client. Set the ID
 ```text
 src/main/java/com/example/insurance/
   InsuranceApplication.java       # Startup
-  customer/                       # Customer entity, request, repository, service, controller
-  policy/                         # Policy entity, DTOs, status, repository, service, controller
-  common/                         # JSON errors and stable page response
+  controller/                     # HTTP endpoints for customers and policies
+  service/                        # Business rules and transactions
+  model/                          # JPA entities and policy status enum
+  dto/                            # Request/response data transfer objects
+  repository/                     # Spring Data JPA database access
+  common/                         # JSON error handling
   config/DemoData.java             # Fictional seed data
 src/main/resources/application.properties
 src/test/java/com/example/insurance/
   InsuranceApiIntegrationTest.java
-  policy/PolicyServiceTest.java
+  service/PolicyServiceTest.java
 docs/                             # Postman, HTTP examples, learning notes
 screenshots/                      # Screenshot instructions/placeholders
 ```
 
-Request flow: **Controller → Service → Repository → H2**. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. The policy response DTO exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues. The customer entity contains only its three public response fields.
+Request flow: **Controller → Service → Repository → H2**. The `model` package maps data to tables; the `dto` package defines HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
 
-Start reading `CustomerController`, then `CustomerService`, then `CustomerRepository`. Next read `PolicyService` and the integration tests. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
+Start reading `controller/CustomerController`, then `service/CustomerService`, then `repository/CustomerRepository`. Next read `service/PolicyService` and the integration tests. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
 
 Database unique constraints and foreign keys also protect records if concurrent requests bypass a service pre-check. No generic framework, Lombok or unnecessary service interfaces are used.
 

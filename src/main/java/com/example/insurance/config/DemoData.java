@@ -1,6 +1,9 @@
 package com.example.insurance.config;
-import com.example.insurance.customer.*;
-import com.example.insurance.policy.*;
+import com.example.insurance.repository.PolicyRepository;
+import com.example.insurance.repository.CustomerRepository;
+import com.example.insurance.model.PolicyStatus;
+import com.example.insurance.model.Policy;
+import com.example.insurance.model.Customer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;

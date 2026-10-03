@@ -1,5 +1,9 @@
-package com.example.insurance.policy;
-import com.example.insurance.common.PageResponse;
+package com.example.insurance.controller;
+import com.example.insurance.service.PolicyService;
+import com.example.insurance.dto.PageResponse;
+import com.example.insurance.dto.PolicyResponse;
+import com.example.insurance.dto.PolicyRequest;
+import com.example.insurance.model.PolicyStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.web.bind.annotation.*;

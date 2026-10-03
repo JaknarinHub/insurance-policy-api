@@ -1,6 +1,6 @@
 package com.example.insurance;
-import com.example.insurance.customer.CustomerRepository;
-import com.example.insurance.policy.PolicyRepository;
+import com.example.insurance.repository.PolicyRepository;
+import com.example.insurance.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

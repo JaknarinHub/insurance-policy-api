@@ -1,6 +1,11 @@
-package com.example.insurance.policy;
-import com.example.insurance.customer.*;
+package com.example.insurance.service;
 import com.example.insurance.common.ApiException;
+import com.example.insurance.repository.PolicyRepository;
+import com.example.insurance.dto.PolicyResponse;
+import com.example.insurance.dto.PolicyRequest;
+import com.example.insurance.model.PolicyStatus;
+import com.example.insurance.model.Policy;
+import com.example.insurance.model.Customer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.*;

@@ -32,3 +32,13 @@
 “This is a personal Java backend demo. I used controllers for HTTP, services for validation across fields and database transactions, and repositories for persistence. I tested both successful requests and errors, including preventing deletion of a customer whose policies still exist.”
 
 Only describe skills you can explain and demonstrate yourself.
+
+## Spring Boot MVC package map
+
+- `controller/`: the web layer; receives requests and returns responses.
+- `service/`: application logic and transactions.
+- `model/`: JPA entities representing stored data.
+- `dto/`: validated request bodies and clean response shapes.
+- `repository/`: database access through Spring Data JPA.
+
+This is a REST API, so JSON responses take the place of server-rendered HTML views.

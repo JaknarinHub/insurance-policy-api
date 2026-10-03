@@ -1,5 +1,4 @@
-package com.example.insurance.policy;
-import com.example.insurance.customer.Customer;
+package com.example.insurance.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
