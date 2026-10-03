@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.insurance.customer.model.Customer;
-import com.example.insurance.customer.repository.CustomerRepository;
-import com.example.insurance.policy.model.Policy;
-import com.example.insurance.policy.model.PolicyStatus;
-import com.example.insurance.policy.repository.PolicyRepository;
+import com.example.insurance.model.customer.Customer;
+import com.example.insurance.repository.customer.CustomerRepository;
+import com.example.insurance.model.policy.Policy;
+import com.example.insurance.model.policy.PolicyStatus;
+import com.example.insurance.repository.policy.PolicyRepository;
 
 @Component
 @ConditionalOnProperty(name = "app.seed-data", havingValue = "true")

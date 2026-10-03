@@ -208,37 +208,40 @@ You can also open `docs/requests.http` in an IDE with an HTTP client. Set the ID
 ```text
 src/main/java/com/example/insurance/
   InsuranceApplication.java
-  customer/
-    controller/CustomerController.java
-    service/CustomerService.java
-    model/Customer.java
-    dto/CustomerRequest.java
-    dto/CustomerResponse.java
-    repository/CustomerRepository.java
-  policy/
-    controller/PolicyController.java
-    service/PolicyService.java
-    model/Policy.java
-    model/PolicyStatus.java
-    dto/PolicyRequest.java
-    dto/PolicyResponse.java
-    repository/PolicyRepository.java
-  common/ApiException.java      # Shared error handling
+  controller/
+    customer/CustomerController.java
+    policy/PolicyController.java
+  service/
+    customer/CustomerService.java
+    policy/PolicyService.java
+  model/
+    customer/Customer.java
+    policy/Policy.java
+    policy/PolicyStatus.java
+  dto/
+    customer/CustomerRequest.java
+    customer/CustomerResponse.java
+    policy/PolicyRequest.java
+    policy/PolicyResponse.java
+    common/PageResponse.java
+  repository/
+    customer/CustomerRepository.java
+    policy/PolicyRepository.java
+  common/ApiException.java
   common/ApiExceptionHandler.java
-  common/dto/PageResponse.java   # Shared pagination response
-  config/DemoData.java          # Fictional seed data
+  config/DemoData.java
 src/main/resources/application.properties
 src/test/java/com/example/insurance/
-  customer/CustomerApiIntegrationTest.java
-  policy/PolicyApiIntegrationTest.java
-  policy/service/PolicyServiceTest.java
+  controller/customer/CustomerApiIntegrationTest.java
+  controller/policy/PolicyApiIntegrationTest.java
+  service/policy/PolicyServiceTest.java
 docs/                           # Postman, HTTP examples, learning notes
 screenshots/                    # Screenshot instructions/placeholders
 ```
 
-Each feature owns its controller, service, model, DTOs and repository. Shared API errors, pagination response and startup data live outside the features. Request flow: **Controller → Service → Repository → H2**. Models map data to tables; DTOs define HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
+Each technical layer has a folder, with customer and policy subfolders where relevant. Shared API errors, pagination response and startup data have separate locations. Request flow: **Controller → Service → Repository → H2**. Models map data to tables; DTOs define HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
 
-Start reading `customer/controller/CustomerController`, then `customer/service/CustomerService`, then `customer/repository/CustomerRepository`. Next read `policy/service/PolicyService` and the feature-specific integration tests. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
+Start reading `controller/customer/CustomerController`, then `service/customer/CustomerService`, then `repository/customer/CustomerRepository`. Next read `service/policy/PolicyService` and the integration tests in `src/test/java`. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
 
 Database unique constraints and foreign keys also protect records if concurrent requests bypass a service pre-check. No generic framework, Lombok or unnecessary service interfaces are used.
 

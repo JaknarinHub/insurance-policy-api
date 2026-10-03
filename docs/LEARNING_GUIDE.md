@@ -33,16 +33,16 @@
 
 Only describe skills you can explain and demonstrate yourself.
 
-## Feature folders and Spring Boot MVC layers
+## Spring Boot MVC layers and subject subfolders
 
-`customer/` owns customer endpoints, rules, data model and persistence. `policy/` owns the same parts for policies. Within each feature:
+The top-level folders group files by responsibility. Inside each layer, `customer/` and `policy/` keep their own files separate:
 
-- `controller/`: receives HTTP requests and sends JSON responses.
-- `service/`: applies application rules and starts transactions.
-- `model/`: JPA entities representing stored data (and policy status).
-- `dto/`: validated request bodies and response shapes.
-- `repository/`: accesses H2 through Spring Data JPA.
+- `controller/customer/` and `controller/policy/`: receive HTTP requests and send JSON responses.
+- `service/customer/` and `service/policy/`: apply application rules and start transactions.
+- `model/customer/` and `model/policy/`: JPA entities representing stored data.
+- `dto/customer/` and `dto/policy/`: validated requests and response shapes. `dto/common/` holds the shared paginated response.
+- `repository/customer/` and `repository/policy/`: access H2 through Spring Data JPA.
 
-`common/` contains shared error handling and the paginated response DTO. `config/` holds fictional startup data. The policy model references the customer model because each policy belongs to a customer. The customer service checks the policy repository before deleting a customer so it does not leave orphaned policies.
+`common/` contains shared error handling. `config/` holds fictional startup data. The policy model references the customer model because each policy belongs to a customer. The customer service checks the policy repository before deleting a customer so it does not leave orphaned policies.
 
-This is a REST API, so JSON responses take the place of server-rendered HTML views. The feature folders let you find everything about a customer or policy in one place.
+This is a REST API, so JSON responses take the place of server-rendered HTML views. To trace a request, follow its controller, service, and repository, then inspect its model and DTOs.
