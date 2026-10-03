@@ -1,7 +1,11 @@
-package com.example.insurance.repository;
-import com.example.insurance.model.Customer;
+package com.example.insurance.customer.repository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.domain.*;
+
+import com.example.insurance.customer.model.Customer;
+
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     boolean existsByEmail(String email);
     boolean existsByEmailAndIdNot(String email, Long id);

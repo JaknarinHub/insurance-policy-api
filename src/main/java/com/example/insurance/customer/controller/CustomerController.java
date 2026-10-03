@@ -1,14 +1,30 @@
-package com.example.insurance.controller;
-import com.example.insurance.service.CustomerService;
-import com.example.insurance.dto.PageResponse;
-import com.example.insurance.dto.CustomerRequest;
-import com.example.insurance.dto.CustomerResponse;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.data.domain.*;
+package com.example.insurance.customer.controller;
+
 import java.net.URI;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.insurance.common.dto.PageResponse;
+import com.example.insurance.customer.dto.CustomerRequest;
+import com.example.insurance.customer.dto.CustomerResponse;
+import com.example.insurance.customer.service.CustomerService;
+
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {

@@ -33,12 +33,16 @@
 
 Only describe skills you can explain and demonstrate yourself.
 
-## Spring Boot MVC package map
+## Feature folders and Spring Boot MVC layers
 
-- `controller/`: the web layer; receives requests and returns responses.
-- `service/`: application logic and transactions.
-- `model/`: JPA entities representing stored data.
-- `dto/`: validated request bodies and clean response shapes.
-- `repository/`: database access through Spring Data JPA.
+`customer/` owns customer endpoints, rules, data model and persistence. `policy/` owns the same parts for policies. Within each feature:
 
-This is a REST API, so JSON responses take the place of server-rendered HTML views.
+- `controller/`: receives HTTP requests and sends JSON responses.
+- `service/`: applies application rules and starts transactions.
+- `model/`: JPA entities representing stored data (and policy status).
+- `dto/`: validated request bodies and response shapes.
+- `repository/`: accesses H2 through Spring Data JPA.
+
+`common/` contains shared error handling and the paginated response DTO. `config/` holds fictional startup data. The policy model references the customer model because each policy belongs to a customer. The customer service checks the policy repository before deleting a customer so it does not leave orphaned policies.
+
+This is a REST API, so JSON responses take the place of server-rendered HTML views. The feature folders let you find everything about a customer or policy in one place.

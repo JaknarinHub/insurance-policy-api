@@ -1,8 +1,11 @@
-package com.example.insurance.dto;
-import com.example.insurance.model.PolicyStatus;
-import com.example.insurance.model.Policy;
+package com.example.insurance.policy.dto;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.example.insurance.policy.model.Policy;
+import com.example.insurance.policy.model.PolicyStatus;
+
 public record PolicyResponse(Long id, String policyNumber, Long customerId, BigDecimal sumAssured,
                              LocalDate startDate, LocalDate endDate, PolicyStatus status) {
     public static PolicyResponse from(Policy policy) {

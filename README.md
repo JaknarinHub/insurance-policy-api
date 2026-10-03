@@ -207,25 +207,38 @@ You can also open `docs/requests.http` in an IDE with an HTTP client. Set the ID
 
 ```text
 src/main/java/com/example/insurance/
-  InsuranceApplication.java       # Startup
-  controller/                     # HTTP endpoints for customers and policies
-  service/                        # Business rules and transactions
-  model/                          # JPA entities and policy status enum
-  dto/                            # Request/response data transfer objects
-  repository/                     # Spring Data JPA database access
-  common/                         # JSON error handling
-  config/DemoData.java             # Fictional seed data
+  InsuranceApplication.java
+  customer/
+    controller/CustomerController.java
+    service/CustomerService.java
+    model/Customer.java
+    dto/CustomerRequest.java
+    dto/CustomerResponse.java
+    repository/CustomerRepository.java
+  policy/
+    controller/PolicyController.java
+    service/PolicyService.java
+    model/Policy.java
+    model/PolicyStatus.java
+    dto/PolicyRequest.java
+    dto/PolicyResponse.java
+    repository/PolicyRepository.java
+  common/ApiException.java      # Shared error handling
+  common/ApiExceptionHandler.java
+  common/dto/PageResponse.java   # Shared pagination response
+  config/DemoData.java          # Fictional seed data
 src/main/resources/application.properties
 src/test/java/com/example/insurance/
-  InsuranceApiIntegrationTest.java
-  service/PolicyServiceTest.java
-docs/                             # Postman, HTTP examples, learning notes
-screenshots/                      # Screenshot instructions/placeholders
+  customer/CustomerApiIntegrationTest.java
+  policy/PolicyApiIntegrationTest.java
+  policy/service/PolicyServiceTest.java
+docs/                           # Postman, HTTP examples, learning notes
+screenshots/                    # Screenshot instructions/placeholders
 ```
 
-Request flow: **Controller → Service → Repository → H2**. The `model` package maps data to tables; the `dto` package defines HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
+Each feature owns its controller, service, model, DTOs and repository. Shared API errors, pagination response and startup data live outside the features. Request flow: **Controller → Service → Repository → H2**. Models map data to tables; DTOs define HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
 
-Start reading `controller/CustomerController`, then `service/CustomerService`, then `repository/CustomerRepository`. Next read `service/PolicyService` and the integration tests. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
+Start reading `customer/controller/CustomerController`, then `customer/service/CustomerService`, then `customer/repository/CustomerRepository`. Next read `policy/service/PolicyService` and the feature-specific integration tests. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
 
 Database unique constraints and foreign keys also protect records if concurrent requests bypass a service pre-check. No generic framework, Lombok or unnecessary service interfaces are used.
 

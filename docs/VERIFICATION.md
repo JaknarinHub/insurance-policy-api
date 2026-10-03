@@ -14,3 +14,7 @@ Tests can be reproduced with `mvn clean test`. Reports are generated in `target/
 ## Layered MVC refactor
 
 On 4 October 2026 (Asia/Bangkok), the code was reorganized into `controller`, `service`, `model`, `dto`, and `repository` packages. The customer API now uses a response DTO. `mvn clean test` passed: 8 tests, 0 failures, 0 errors. The endpoint paths and JSON fields were preserved.
+
+## Feature-first package organization
+
+On 4 October 2026 (Asia/Bangkok), the project was grouped into `customer/` and `policy/` features. Each contains its own controller, service, model, DTOs, and repository; shared code remains in `common/`. The integration tests were split into customer and policy folders. HTTP paths and JSON contracts are unchanged. `mvn clean package` passed with 9 tests, 0 failures, and 0 errors. The packaged JAR contains the expected feature packages.

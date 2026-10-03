@@ -1,14 +1,21 @@
 package com.example.insurance.common;
+
+import java.time.Instant;
+import java.util.Map;
+import java.util.TreeMap;
+
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.dao.DataIntegrityViolationException;
-import java.time.Instant;
-import java.util.*;
+
 @RestControllerAdvice
 public class ApiExceptionHandler {
     public record ErrorResponse(Instant timestamp, int status, String message, String path, Map<String, String> errors) {}

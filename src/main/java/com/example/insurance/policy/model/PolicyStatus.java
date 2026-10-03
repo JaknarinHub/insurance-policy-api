@@ -1,2 +1,5 @@
-package com.example.insurance.model;
+package com.example.insurance.policy.model;
+
+
+
 public enum PolicyStatus { ACTIVE, CANCELLED, EXPIRED }

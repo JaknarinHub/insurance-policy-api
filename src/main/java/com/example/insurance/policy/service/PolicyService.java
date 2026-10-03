@@ -1,17 +1,23 @@
-package com.example.insurance.service;
-import com.example.insurance.common.ApiException;
-import com.example.insurance.repository.PolicyRepository;
-import com.example.insurance.dto.PolicyResponse;
-import com.example.insurance.dto.PolicyRequest;
-import com.example.insurance.model.PolicyStatus;
-import com.example.insurance.model.Policy;
-import com.example.insurance.model.Customer;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.*;
+package com.example.insurance.policy.service;
+
+import java.util.Locale;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import java.util.Locale;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.insurance.common.ApiException;
+import com.example.insurance.customer.model.Customer;
+import com.example.insurance.customer.service.CustomerService;
+import com.example.insurance.policy.dto.PolicyRequest;
+import com.example.insurance.policy.dto.PolicyResponse;
+import com.example.insurance.policy.model.Policy;
+import com.example.insurance.policy.model.PolicyStatus;
+import com.example.insurance.policy.repository.PolicyRepository;
+
 @Service
 @Transactional
 public class PolicyService {

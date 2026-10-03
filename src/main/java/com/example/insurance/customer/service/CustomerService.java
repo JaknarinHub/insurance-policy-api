@@ -1,14 +1,19 @@
-package com.example.insurance.service;
-import com.example.insurance.common.ApiException;
-import com.example.insurance.repository.PolicyRepository;
-import com.example.insurance.repository.CustomerRepository;
-import com.example.insurance.dto.CustomerRequest;
-import com.example.insurance.model.Customer;
+package com.example.insurance.customer.service;
+
+import java.util.Locale;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.*;
-import org.springframework.http.HttpStatus;
-import java.util.Locale;
+
+import com.example.insurance.common.ApiException;
+import com.example.insurance.customer.dto.CustomerRequest;
+import com.example.insurance.customer.model.Customer;
+import com.example.insurance.customer.repository.CustomerRepository;
+import com.example.insurance.policy.repository.PolicyRepository;
+
 @Service
 @Transactional
 public class CustomerService {

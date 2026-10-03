@@ -1,15 +1,19 @@
 package com.example.insurance.config;
-import com.example.insurance.repository.PolicyRepository;
-import com.example.insurance.repository.CustomerRepository;
-import com.example.insurance.model.PolicyStatus;
-import com.example.insurance.model.Policy;
-import com.example.insurance.model.Customer;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+
+import com.example.insurance.customer.model.Customer;
+import com.example.insurance.customer.repository.CustomerRepository;
+import com.example.insurance.policy.model.Policy;
+import com.example.insurance.policy.model.PolicyStatus;
+import com.example.insurance.policy.repository.PolicyRepository;
+
 @Component
 @ConditionalOnProperty(name = "app.seed-data", havingValue = "true")
 public class DemoData implements CommandLineRunner {

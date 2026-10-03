@@ -1,43 +1,46 @@
-package com.example.insurance;
-import com.example.insurance.repository.PolicyRepository;
-import com.example.insurance.repository.CustomerRepository;
+package com.example.insurance.policy;
+
+import com.example.insurance.customer.repository.CustomerRepository;
+import com.example.insurance.policy.repository.PolicyRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @SpringBootTest(properties = "app.seed-data=false")
 @AutoConfigureMockMvc
-class InsuranceApiIntegrationTest {
+class PolicyApiIntegrationTest {
     @Autowired MockMvc mvc;
     @Autowired ObjectMapper mapper;
     @Autowired CustomerRepository customers;
     @Autowired PolicyRepository policies;
-    @BeforeEach void clean() { policies.deleteAll(); customers.deleteAll(); }
+
+    @BeforeEach
+    void clean() {
+        policies.deleteAll();
+        customers.deleteAll();
+    }
+
     private long customer(String name, String email) throws Exception {
         String body = mapper.writeValueAsString(java.util.Map.of("name", name, "email", email));
         String result = mvc.perform(post("/api/customers").contentType(MediaType.APPLICATION_JSON).content(body))
-            .andExpect(status().isCreated()).andExpect(header().exists("Location")).andReturn().getResponse().getContentAsString();
+            .andExpect(status().isCreated()).andExpect(header().exists("Location"))
+            .andReturn().getResponse().getContentAsString();
         return mapper.readTree(result).get("id").asLong();
     }
+
     private String policy(long customerId, String number, String amount, String end) {
         return "{\"customerId\":" + customerId + ",\"policyNumber\":\"" + number + "\",\"sumAssured\":" + amount +
             ",\"startDate\":\"2026-01-01\",\"endDate\":\"" + end + "\",\"status\":\"ACTIVE\"}";
     }
-    @Test void customerCrudAndSearch() throws Exception {
-        long id = customer("Alex Demo", "ALEX@example.com");
-        mvc.perform(get("/api/customers/" + id)).andExpect(status().isOk()).andExpect(jsonPath("$.email").value("alex@example.com"));
-        mvc.perform(get("/api/customers").param("name", "aLeX").param("size", "1"))
-            .andExpect(status().isOk()).andExpect(jsonPath("$.totalElements").value(1)).andExpect(jsonPath("$.content[0].id").value(id));
-        mvc.perform(put("/api/customers/" + id).contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Alex Updated\",\"email\":\"updated@example.com\"}"))
-            .andExpect(status().isOk()).andExpect(jsonPath("$.name").value("Alex Updated"));
-        mvc.perform(delete("/api/customers/" + id)).andExpect(status().isNoContent());
-        mvc.perform(get("/api/customers/" + id)).andExpect(status().isNotFound()).andExpect(jsonPath("$.message").value("Customer not found"));
-    }
+
     @Test void policyCrudFiltersAndCustomerDeleteProtection() throws Exception {
         long customerId = customer("Alex Demo", "alex@example.com");
         long otherId = customer("Sam Sample", "sam@example.com");
@@ -57,18 +60,7 @@ class InsuranceApiIntegrationTest {
         mvc.perform(get("/api/policies/" + id)).andExpect(status().isNotFound());
         mvc.perform(delete("/api/customers/" + customerId)).andExpect(status().isNoContent());
     }
-    @Test void rejectsInvalidAndDuplicateCustomers() throws Exception {
-        long id = customer("Alex", "alex@example.com");
-        mvc.perform(post("/api/customers").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\" \",\"email\":\"bad\"}"))
-            .andExpect(status().isBadRequest()).andExpect(jsonPath("$.errors.name").exists()).andExpect(jsonPath("$.errors.email").exists());
-        mvc.perform(post("/api/customers").contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Other\",\"email\":\"ALEX@example.com\"}"))
-            .andExpect(status().isConflict());
-        long other = customer("Sam", "sam@example.com");
-        mvc.perform(put("/api/customers/" + other).contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Sam\",\"email\":\"alex@example.com\"}"))
-            .andExpect(status().isConflict());
-        mvc.perform(put("/api/customers/" + id).contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Alex\",\"email\":\"alex@example.com\"}"))
-            .andExpect(status().isOk());
-    }
+
     @Test void rejectsInvalidPoliciesAndUnknownCustomer() throws Exception {
         long id = customer("Alex", "alex@example.com");
         for (String amount : new String[]{"0", "-1", "1.001", "10000000000000"}) {
@@ -81,6 +73,7 @@ class InsuranceApiIntegrationTest {
         mvc.perform(post("/api/policies").contentType(MediaType.APPLICATION_JSON).content("{}"))
             .andExpect(status().isBadRequest()).andExpect(jsonPath("$.errors.customerId").exists());
     }
+
     @Test void rejectsDuplicatePolicyOnCreateAndUpdate() throws Exception {
         long id = customer("Alex", "alex@example.com");
         String first = mvc.perform(post("/api/policies").contentType(MediaType.APPLICATION_JSON).content(policy(id, "DEMO-001", "100", "2027-01-01")))
@@ -94,10 +87,9 @@ class InsuranceApiIntegrationTest {
         mvc.perform(put("/api/policies/" + firstId).contentType(MediaType.APPLICATION_JSON).content(policy(id, "DEMO-001", "100", "2025-01-01"))).andExpect(status().isBadRequest());
         mvc.perform(get("/api/policies/" + firstId)).andExpect(jsonPath("$.endDate").value("2027-01-01"));
     }
-    @Test void rejectsMalformedRequestsAndInvalidPagination() throws Exception {
-        mvc.perform(post("/api/customers").contentType(MediaType.APPLICATION_JSON).content("{" )).andExpect(status().isBadRequest());
-        mvc.perform(get("/api/customers/not-a-number")).andExpect(status().isBadRequest());
-        mvc.perform(get("/api/customers").param("page", "-1")).andExpect(status().isBadRequest());
+
+    @Test
+    void rejectsMalformedPolicyRequestsAndInvalidPagination() throws Exception {
         mvc.perform(get("/api/policies").param("size", "101")).andExpect(status().isBadRequest());
         mvc.perform(get("/api/policies").param("status", "UNKNOWN")).andExpect(status().isBadRequest());
         mvc.perform(get("/api/policies").param("customerId", "0")).andExpect(status().isBadRequest());

@@ -1,7 +1,7 @@
-package com.example.insurance.service;
+package com.example.insurance.policy.service;
 import com.example.insurance.common.ApiException;
-import com.example.insurance.dto.PolicyRequest;
-import com.example.insurance.model.PolicyStatus;
+import com.example.insurance.policy.dto.PolicyRequest;
+import com.example.insurance.policy.model.PolicyStatus;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
