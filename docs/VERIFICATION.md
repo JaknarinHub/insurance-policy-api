@@ -22,3 +22,7 @@ On 4 October 2026 (Asia/Bangkok), the project was grouped into `customer/` and `
 ## Layer-first subject subfolders
 
 On 4 October 2026 (Asia/Bangkok), files were reorganized by technical layer first, then by customer or policy. For example, request DTOs now live in `dto/customer/` and `dto/policy/`. Tests mirror their respective controller or service layer. HTTP paths and JSON contracts are unchanged. `mvn clean package` passed with 9 tests, 0 failures, and 0 errors.
+
+## Flat controller and repository folders
+
+On 4 October 2026 (Asia/Bangkok), customer and policy controllers were placed directly in `controller/`, and both repositories directly in `repository/`. DTOs, models, and services keep their subject subfolders. Integration tests live directly in the test `controller/` folder. HTTP paths and JSON contracts are unchanged. `mvn clean package` passed with 9 tests, 0 failures, and 0 errors.

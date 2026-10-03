@@ -1,7 +1,7 @@
-package com.example.insurance.controller.customer;
+package com.example.insurance.controller;
 
-import com.example.insurance.repository.customer.CustomerRepository;
-import com.example.insurance.repository.policy.PolicyRepository;
+import com.example.insurance.repository.CustomerRepository;
+import com.example.insurance.repository.PolicyRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.example.insurance.controller.policy;
+package com.example.insurance.controller;
 
 import java.net.URI;
 
@@ -21,31 +21,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.insurance.dto.common.PageResponse;
-import com.example.insurance.dto.policy.PolicyRequest;
-import com.example.insurance.dto.policy.PolicyResponse;
-import com.example.insurance.model.policy.PolicyStatus;
-import com.example.insurance.service.policy.PolicyService;
+import com.example.insurance.dto.customer.CustomerRequest;
+import com.example.insurance.dto.customer.CustomerResponse;
+import com.example.insurance.service.customer.CustomerService;
 
 @RestController
-@RequestMapping("/api/policies")
-public class PolicyController {
-    private final PolicyService service;
-    public PolicyController(PolicyService service) { this.service = service; }
+@RequestMapping("/api/customers")
+public class CustomerController {
+    private final CustomerService service;
+    public CustomerController(CustomerService service) { this.service = service; }
     @GetMapping
-    public PageResponse<PolicyResponse> list(@RequestParam(required = false) @Positive Long customerId, @RequestParam(required = false) PolicyStatus status,
+    public PageResponse<CustomerResponse> list(@RequestParam(defaultValue = "") String name,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size) {
-        return PageResponse.from(service.list(customerId, status, PageRequest.of(page, size, Sort.by("id"))));
+        return PageResponse.from(service.list(name, PageRequest.of(page, size, Sort.by("id"))).map(CustomerResponse::from));
     }
     @GetMapping("/{id}")
-    public PolicyResponse get(@PathVariable @Positive Long id) { return service.get(id); }
+    public CustomerResponse get(@PathVariable @Positive Long id) { return CustomerResponse.from(service.get(id)); }
     @PostMapping
-    public ResponseEntity<PolicyResponse> create(@Valid @RequestBody PolicyRequest request) {
-        PolicyResponse result = service.create(request);
-        return ResponseEntity.created(URI.create("/api/policies/" + result.id())).body(result);
+    public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CustomerRequest request) {
+        CustomerResponse result = CustomerResponse.from(service.create(request));
+        return ResponseEntity.created(URI.create("/api/customers/" + result.id())).body(result);
     }
     @PutMapping("/{id}")
-    public PolicyResponse update(@PathVariable @Positive Long id, @Valid @RequestBody PolicyRequest request) { return service.update(id, request); }
+    public CustomerResponse update(@PathVariable @Positive Long id, @Valid @RequestBody CustomerRequest request) { return CustomerResponse.from(service.update(id, request)); }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable @Positive Long id) { service.delete(id); return ResponseEntity.noContent().build(); }
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.insurance.model.customer.Customer;
-import com.example.insurance.repository.customer.CustomerRepository;
+import com.example.insurance.repository.CustomerRepository;
 import com.example.insurance.model.policy.Policy;
 import com.example.insurance.model.policy.PolicyStatus;
-import com.example.insurance.repository.policy.PolicyRepository;
+import com.example.insurance.repository.PolicyRepository;
 
 @Component
 @ConditionalOnProperty(name = "app.seed-data", havingValue = "true")

@@ -15,4 +15,4 @@
 
 ก่อนใส่ Portfolio ควรทดลองรันและแก้ไขโค้ดเล็กน้อยด้วยตัวเอง เพื่อให้สามารถอธิบายงานนี้กับลูกค้าได้อย่างมั่นใจ หาก Maven ยังแสดง Java 8 ให้เปลี่ยน JAVA_HOME หรือ Maven runner JDK เป็น 17/21 ก่อน
 
-โครงสร้างแยกตามหมวด `controller/`, `service/`, `model/`, `dto/`, `repository/` และภายในแต่ละหมวดแยก `customer/` กับ `policy/` เช่น `dto/customer/CustomerRequest.java` และ `dto/policy/PolicyRequest.java` ส่วนโค้ดที่ใช้ร่วมกันอยู่ใน `common/` และข้อมูลตัวอย่างอยู่ใน `config/`
+โครงสร้างแยกตามหมวด `controller/`, `service/`, `model/`, `dto/`, `repository/` โดย `controller/` และ `repository/` เก็บไฟล์ไว้ในหมวดหลัก ส่วน `service/`, `model/`, `dto/` แยก `customer/` กับ `policy/` เช่น `dto/customer/CustomerRequest.java` และ `dto/policy/PolicyRequest.java` ส่วนโค้ดที่ใช้ร่วมกันอยู่ใน `common/` และข้อมูลตัวอย่างอยู่ใน `config/`

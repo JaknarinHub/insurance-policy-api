@@ -209,8 +209,8 @@ You can also open `docs/requests.http` in an IDE with an HTTP client. Set the ID
 src/main/java/com/example/insurance/
   InsuranceApplication.java
   controller/
-    customer/CustomerController.java
-    policy/PolicyController.java
+    CustomerController.java
+    PolicyController.java
   service/
     customer/CustomerService.java
     policy/PolicyService.java
@@ -225,23 +225,23 @@ src/main/java/com/example/insurance/
     policy/PolicyResponse.java
     common/PageResponse.java
   repository/
-    customer/CustomerRepository.java
-    policy/PolicyRepository.java
+    CustomerRepository.java
+    PolicyRepository.java
   common/ApiException.java
   common/ApiExceptionHandler.java
   config/DemoData.java
 src/main/resources/application.properties
 src/test/java/com/example/insurance/
-  controller/customer/CustomerApiIntegrationTest.java
-  controller/policy/PolicyApiIntegrationTest.java
+  controller/CustomerApiIntegrationTest.java
+  controller/PolicyApiIntegrationTest.java
   service/policy/PolicyServiceTest.java
 docs/                           # Postman, HTTP examples, learning notes
 screenshots/                    # Screenshot instructions/placeholders
 ```
 
-Each technical layer has a folder, with customer and policy subfolders where relevant. Shared API errors, pagination response and startup data have separate locations. Request flow: **Controller → Service → Repository → H2**. Models map data to tables; DTOs define HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
+Each technical layer has a folder. DTOs, models and services have customer and policy subfolders; controllers and repositories have their two files directly in their layer folder. Shared API errors, pagination response and startup data have separate locations. Request flow: **Controller → Service → Repository → H2**. Models map data to tables; DTOs define HTTP request and response shapes. Controllers handle HTTP and validate request DTOs; services apply demo rules in database transactions; repositories access the database. Both customer and policy responses use DTOs, so JPA entities stay inside the application. The policy response exposes `customerId` instead of serializing the linked customer entity, keeping JSON simple and avoiding lazy-loading issues.
 
-Start reading `controller/customer/CustomerController`, then `service/customer/CustomerService`, then `repository/customer/CustomerRepository`. Next read `service/policy/PolicyService` and the integration tests in `src/test/java`. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
+Start reading `controller/CustomerController`, then `service/customer/CustomerService`, then `repository/CustomerRepository`. Next read `service/policy/PolicyService` and the integration tests in `src/test/java`. See `docs/LEARNING_GUIDE.md` for a short walkthrough and practice exercises.
 
 Database unique constraints and foreign keys also protect records if concurrent requests bypass a service pre-check. No generic framework, Lombok or unnecessary service interfaces are used.
 

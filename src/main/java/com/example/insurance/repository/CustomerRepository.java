@@ -1,4 +1,4 @@
-package com.example.insurance.repository.customer;
+package com.example.insurance.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

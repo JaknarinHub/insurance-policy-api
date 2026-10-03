@@ -1,4 +1,4 @@
-package com.example.insurance.repository.policy;
+package com.example.insurance.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

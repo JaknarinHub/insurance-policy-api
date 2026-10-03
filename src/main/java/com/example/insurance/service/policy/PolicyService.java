@@ -16,7 +16,7 @@ import com.example.insurance.dto.policy.PolicyRequest;
 import com.example.insurance.dto.policy.PolicyResponse;
 import com.example.insurance.model.policy.Policy;
 import com.example.insurance.model.policy.PolicyStatus;
-import com.example.insurance.repository.policy.PolicyRepository;
+import com.example.insurance.repository.PolicyRepository;
 
 @Service
 @Transactional

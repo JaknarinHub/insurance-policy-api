@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.insurance.common.ApiException;
 import com.example.insurance.dto.customer.CustomerRequest;
 import com.example.insurance.model.customer.Customer;
-import com.example.insurance.repository.customer.CustomerRepository;
-import com.example.insurance.repository.policy.PolicyRepository;
+import com.example.insurance.repository.CustomerRepository;
+import com.example.insurance.repository.PolicyRepository;
 
 @Service
 @Transactional

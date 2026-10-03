@@ -35,13 +35,13 @@ Only describe skills you can explain and demonstrate yourself.
 
 ## Spring Boot MVC layers and subject subfolders
 
-The top-level folders group files by responsibility. Inside each layer, `customer/` and `policy/` keep their own files separate:
+The top-level folders group files by responsibility. Controllers and repositories each hold their two files directly. DTOs, models and services use `customer/` and `policy/` subfolders:
 
-- `controller/customer/` and `controller/policy/`: receive HTTP requests and send JSON responses.
+- `controller/`: receive HTTP requests and send JSON responses.
 - `service/customer/` and `service/policy/`: apply application rules and start transactions.
 - `model/customer/` and `model/policy/`: JPA entities representing stored data.
 - `dto/customer/` and `dto/policy/`: validated requests and response shapes. `dto/common/` holds the shared paginated response.
-- `repository/customer/` and `repository/policy/`: access H2 through Spring Data JPA.
+- `repository/`: access H2 through Spring Data JPA.
 
 `common/` contains shared error handling. `config/` holds fictional startup data. The policy model references the customer model because each policy belongs to a customer. The customer service checks the policy repository before deleting a customer so it does not leave orphaned policies.
 
